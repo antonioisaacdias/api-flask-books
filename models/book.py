@@ -9,6 +9,17 @@ class Book(db.Model):
     title = db.Column(db.String(255), nullable=False)
     author = db.Column(db.String(255), nullable=False)
     description = db.Column(TEXT(), nullable=False)
-    isFavorite = db.Column(db.Boolean, deafault=False)
-    isReading = db.Column(db.Boolean, deafault=False)
-    isFinished = db.Column(db.Boolean, deafault=False)
+    isFavorite = db.Column(db.Boolean, default=False)
+    isReading = db.Column(db.Boolean, default=False)
+    isFinished = db.Column(db.Boolean, default=False)
+
+    def as_dict(self):
+        return {
+            'id': str(self.id),
+            'title': self.title,
+            'author': self.author,
+            'description': self.description,
+            'isFavorite': self.isFavorite,
+            'isReading': self.isReading,
+            'isFinished': self.isFinished
+        }
