@@ -19,5 +19,10 @@ def add_book():
     db.session.commit()
     return jsonify({'message': 'livro inserido com sucesso'}), 201
 
+@app.route('/books', methods=['GET'])
+def get_all():
+    books = Book.query.all()
+    return jsonify([book.as_dict() for book in books])
+
 if __name__ == '__main__':
     app.run(debug=True, port=8080, host='0.0.0.0')
