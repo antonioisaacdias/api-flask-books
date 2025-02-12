@@ -38,5 +38,12 @@ def update_book(book_id):
     db.session.commit()
     return jsonify({'message': 'Livro atualizado com sucesso'})
 
+@app.route('/books/<uuid:book_id>', methods=['DELETE'])
+def delete(book_id):
+    book = Book.query.get_or_404(book_id)
+    db.session.delete(book)
+    db.session.commit()
+    return jsonify({'message': 'Livro removido com sucesso'})
+
 if __name__ == '__main__':
     app.run(debug=True, port=8080, host='0.0.0.0')
