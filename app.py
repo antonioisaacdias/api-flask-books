@@ -24,5 +24,19 @@ def get_all():
     books = Book.query.all()
     return jsonify([book.as_dict() for book in books])
 
+@app.route('/books/<uuid:book_id>', methods=['GET'])
+def get_book(book_id):
+    book = Book.query.get_or_404(book_id)
+    return jsonify(book.as_dict())
+
+@app.route('/books/<uuid:book_id>', methods=['PATCH'])
+def update_book(book_id):
+    book = Book.query.get_or_404(book_id)
+    data = request.get_json()
+    for key, value in data.items():
+        setattr(book, key, value)
+    db.session.commit()
+    return jsonify({'message': 'Livro atualizado com sucesso'})
+
 if __name__ == '__main__':
     app.run(debug=True, port=8080, host='0.0.0.0')
